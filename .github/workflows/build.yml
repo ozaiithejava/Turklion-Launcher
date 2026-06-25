@@ -50,18 +50,12 @@ jobs:
         run: npm install
 
       - name: Build Linux
-        run: npx electron-builder --linux AppImage deb --publish never
+        run: npx electron-builder --linux AppImage --publish never
 
       - uses: actions/upload-artifact@v4
         with:
           name: TurklionLauncher-Linux-AppImage
           path: dist/*.AppImage
-          retention-days: 30
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: TurklionLauncher-Linux-deb
-          path: dist/*.deb
           retention-days: 30
 
   build-macos:
@@ -116,7 +110,6 @@ jobs:
             |----------|-------|----------|
             | Windows | `.exe` | Direkt calistir |
             | Linux | `.AppImage` | `chmod +x` sonra calistir |
-            | Linux | `.deb` | `sudo dpkg -i` ile kur |
             | macOS | `.dmg` | Applications klasorune surukle |
           files: release-files/**/*
           draft: false
