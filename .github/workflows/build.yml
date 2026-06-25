@@ -1,8 +1,7 @@
-name: Build Türklion Launcher (All Platforms)
+name: Build Turklion Launcher (All Platforms)
 
 on:
   push:
-    branches: [main, master]
     tags:
       - 'v*'
   workflow_dispatch:
@@ -12,22 +11,22 @@ jobs:
     name: Windows Build
     runs-on: windows-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --ignore-scripts
+
+      - name: Rebuild native modules for Electron
+        run: npx electron-rebuild
 
       - name: Build Windows
         run: npx electron-builder --win --publish never
 
-      - name: Upload Windows artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: TurklionLauncher-Windows
           path: dist/*.exe
@@ -37,34 +36,35 @@ jobs:
     name: Linux Build
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: Install system dependencies
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y rpm fakeroot dpkg libarchive-tools
+          sudo apt-get install -y rpm fakeroot dpkg libarchive-tools \
+            libx11-dev libxkbfile-dev libsecret-1-dev \
+            python3 make g++ gcc
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --ignore-scripts
+
+      - name: Rebuild native modules for Electron
+        run: npx electron-rebuild
 
       - name: Build Linux
         run: npx electron-builder --linux AppImage deb --publish never
 
-      - name: Upload Linux AppImage
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: TurklionLauncher-Linux-AppImage
           path: dist/*.AppImage
           retention-days: 30
 
-      - name: Upload Linux deb
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: TurklionLauncher-Linux-deb
           path: dist/*.deb
@@ -74,24 +74,24 @@ jobs:
     name: macOS Build
     runs-on: macos-14
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --ignore-scripts
+
+      - name: Rebuild native modules for Electron
+        run: npx electron-rebuild
 
       - name: Build macOS
         run: npx electron-builder --mac dmg --publish never
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
-      - name: Upload macOS artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: TurklionLauncher-macOS
           path: dist/*.dmg
@@ -121,13 +121,12 @@ jobs:
           body: |
             ## Turklion Launcher ${{ github.ref_name }}
 
-            ### İndirme Linkleri
-            | Platform | Dosya | Açıklama |
+            | Platform | Dosya | Aciklama |
             |----------|-------|----------|
-            | Windows | `.exe` | Kurulum gerektirmez, direkt çalıştır |
-            | Linux | `.AppImage` | `chmod +x` sonra çalıştır |
-            | Linux | `.deb` | `dpkg -i` ile kur |
-            | macOS | `.dmg` | Aç ve Applications'a sürükle |
+            | Windows | `.exe` | Direkt calistir |
+            | Linux | `.AppImage` | `chmod +x` sonra calistir |
+            | Linux | `.deb` | `sudo dpkg -i` ile kur |
+            | macOS | `.dmg` | Applications klasorune surukle |
           files: release-files/**/*
           draft: false
           prerelease: false
