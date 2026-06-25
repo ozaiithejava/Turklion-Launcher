@@ -18,10 +18,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install --ignore-scripts
-
-      - name: Rebuild native modules for Electron
-        run: npx electron-rebuild
+        run: npm install
 
       - name: Build Windows
         run: npx electron-builder --win --publish never
@@ -50,10 +47,7 @@ jobs:
             python3 make g++ gcc
 
       - name: Install dependencies
-        run: npm install --ignore-scripts
-
-      - name: Rebuild native modules for Electron
-        run: npx electron-rebuild
+        run: npm install
 
       - name: Build Linux
         run: npx electron-builder --linux AppImage deb --publish never
@@ -81,10 +75,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install --ignore-scripts
-
-      - name: Rebuild native modules for Electron
-        run: npx electron-rebuild
+        run: npm install
 
       - name: Build macOS
         run: npx electron-builder --mac dmg --publish never
