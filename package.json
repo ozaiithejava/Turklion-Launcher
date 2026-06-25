@@ -1,8 +1,8 @@
 {
-  "name": "ozaii-client-launcher",
+  "name": "turklion-launcher",
   "version": "1.0.0",
   "author": "Ozaii",
-  "description": "Türklion Launcher",
+  "description": "Turklion Launcher",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
