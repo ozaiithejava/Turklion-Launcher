@@ -5,11 +5,11 @@ on:
     branches: [main, master]
     tags:
       - 'v*'
-  workflow_dispatch:  # Manuel tetikleme butonu
+  workflow_dispatch:
 
 jobs:
   build-windows:
-    name: 🪟 Windows Build
+    name: Windows Build
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -19,13 +19,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Build Windows (portable .exe)
-        run: npx electron-builder --win
+      - name: Build Windows
+        run: npx electron-builder --win --publish never
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
@@ -35,8 +34,8 @@ jobs:
           retention-days: 30
 
   build-linux:
-    name: 🐧 Linux Build
-    runs-on: ubuntu-latest
+    name: Linux Build
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,18 +44,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y rpm fakeroot dpkg libarchive-tools
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Install Linux build deps
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y rpm fakeroot dpkg
-
-      - name: Build Linux (AppImage + deb)
-        run: npx electron-builder --linux
+      - name: Build Linux
+        run: npx electron-builder --linux AppImage deb --publish never
 
       - name: Upload Linux AppImage
         uses: actions/upload-artifact@v4
@@ -73,8 +71,8 @@ jobs:
           retention-days: 30
 
   build-macos:
-    name: 🍎 macOS Build
-    runs-on: macos-latest
+    name: macOS Build
+    runs-on: macos-14
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -83,15 +81,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Build macOS (dmg)
-        run: npx electron-builder --mac
+      - name: Build macOS
+        run: npx electron-builder --mac dmg --publish never
         env:
-          # Code signing devre dışı (sertifika olmadan)
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
       - name: Upload macOS artifact
@@ -101,9 +97,8 @@ jobs:
           path: dist/*.dmg
           retention-days: 30
 
-  # Tag push'larında GitHub Release oluştur ve dosyaları ekle
   release:
-    name: 🚀 Create Release
+    name: Create Release
     needs: [build-windows, build-linux, build-macos]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
@@ -116,22 +111,23 @@ jobs:
           path: release-files
           merge-multiple: true
 
+      - name: List files
+        run: find release-files -type f
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "Türklion Launcher ${{ github.ref_name }}"
+          name: "Turklion Launcher ${{ github.ref_name }}"
           body: |
-            ## Türklion Launcher ${{ github.ref_name }}
+            ## Turklion Launcher ${{ github.ref_name }}
 
             ### İndirme Linkleri
-            | Platform | Dosya |
-            |----------|-------|
-            | 🪟 Windows | `.exe` portable |
-            | 🐧 Linux | `.AppImage` (çalıştırılabilir) veya `.deb` |
-            | 🍎 macOS | `.dmg` disk imajı |
-
-            > ℹ️ macOS kullanıcıları: İlk açılışta Gatekeeper uyarısı görebilirsiniz.
-            > Sistem Tercihleri → Güvenlik → "Yine de Aç" diyerek geçebilirsiniz.
+            | Platform | Dosya | Açıklama |
+            |----------|-------|----------|
+            | Windows | `.exe` | Kurulum gerektirmez, direkt çalıştır |
+            | Linux | `.AppImage` | `chmod +x` sonra çalıştır |
+            | Linux | `.deb` | `dpkg -i` ile kur |
+            | macOS | `.dmg` | Aç ve Applications'a sürükle |
           files: release-files/**/*
           draft: false
           prerelease: false
