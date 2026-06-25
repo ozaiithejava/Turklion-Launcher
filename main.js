@@ -868,13 +868,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle('download-java', async () => {
     const appData = getAppDataPath();
-    const tempZipName = `jre8_download_${Date.now()}.zip`;
-    const zipPath = path.join(os.tmpdir(), tempZipName);
     const jreDir = path.join(appData, 'jre8');
-    
-    logToLauncherConsole(`[Stage 2/6] Özel Java JRE 8 indirme işlemi başlatıldı.`);
-    logToLauncherConsole(`[Stage 2/6] Geçici indirilecek dosya yolu: ${zipPath}`);
-    logToLauncherConsole(`[Stage 2/6] Kurulacak hedef dizin: ${jreDir}`);
     
     // ── OS/Arch-Aware Adoptium JRE 8 URL ─────────────────────────────────────
     const plat = process.platform; // 'win32' | 'linux' | 'darwin'
@@ -884,9 +878,15 @@ app.whenReady().then(() => {
     const isWin        = plat === 'win32';
     const archiveExt   = isWin ? 'zip' : 'tar.gz';
     const javaUrl = `https://api.adoptium.net/v3/binary/latest/8/ga/${adoptiumOS}/${adoptiumArch}/jre/hotspot/normal/eclipse`;
-    // ─────────────────────────────────────────────────────────────────────────
-    logToLauncherConsole(`[Stage 2/6] Java indirme: ${adoptiumOS} / ${adoptiumArch} (${archiveExt})`);
+    
     const tempZipName = `jre8_download_${Date.now()}.${archiveExt}`;
+    const zipPath = path.join(os.tmpdir(), tempZipName);
+    // ─────────────────────────────────────────────────────────────────────────
+    
+    logToLauncherConsole(`[Stage 2/6] Özel Java JRE 8 indirme işlemi başlatıldı.`);
+    logToLauncherConsole(`[Stage 2/6] Geçici indirilecek dosya yolu: ${zipPath}`);
+    logToLauncherConsole(`[Stage 2/6] Kurulacak hedef dizin: ${jreDir}`);
+    logToLauncherConsole(`[Stage 2/6] Java indirme: ${adoptiumOS} / ${adoptiumArch} (${archiveExt})`);
     const proxies = [
       "", // Direct (fallback to CDN redirect)
       "https://ghp.ci/", // Proxy 1
