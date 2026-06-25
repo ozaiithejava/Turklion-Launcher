@@ -972,7 +972,8 @@ app.whenReady().then(() => {
     };
     if (isWin) {
       dialogOpts.filters = [{ name: 'Java Executable', extensions: ['exe'] }];
-    });
+    }
+    const result = await dialog.showOpenDialog(dialogOpts);
     if (result.canceled || result.filePaths.length === 0) {
       return '';
     }
