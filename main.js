@@ -878,13 +878,9 @@ app.whenReady().then(() => {
     const isWin        = plat === 'win32';
     const archiveExt   = isWin ? 'zip' : 'tar.gz';
     const javaUrl = `https://api.adoptium.net/v3/binary/latest/8/ga/${adoptiumOS}/${adoptiumArch}/jre/hotspot/normal/eclipse`;
-    
-    const tempZipName = `jre8_download_${Date.now()}.${archiveExt}`;
-    const zipPath = path.join(os.tmpdir(), tempZipName);
     // ─────────────────────────────────────────────────────────────────────────
     
     logToLauncherConsole(`[Stage 2/6] Özel Java JRE 8 indirme işlemi başlatıldı.`);
-    logToLauncherConsole(`[Stage 2/6] Geçici indirilecek dosya yolu: ${zipPath}`);
     logToLauncherConsole(`[Stage 2/6] Kurulacak hedef dizin: ${jreDir}`);
     logToLauncherConsole(`[Stage 2/6] Java indirme: ${adoptiumOS} / ${adoptiumArch} (${archiveExt})`);
     const proxies = [
@@ -909,8 +905,14 @@ app.whenReady().then(() => {
       const proxy = proxies[i];
       const proxyMsg = proxy ? `(CDN Ağı - Bağlantı ${i})` : "(Doğrudan Bağlantı)";
       
+      // Her deneme için benzersiz bir dosya adı oluşturuyoruz
+      // os.tmpdir() yerine appData kullanarak Antivirüs/EPERM çakışmalarını önlüyoruz
+      const tempZipName = `jre8_download_${Date.now()}_${i}.${archiveExt}`;
+      const zipPath = path.join(appData, tempZipName);
+      
       try {
         console.log(`Java indirme deneniyor: ${proxyMsg}...`);
+        logToLauncherConsole(`[Stage 2/6] İndirilecek dosya yolu: ${zipPath}`);
         
         mainWindow.webContents.send('java-download-progress', { 
           status: 'downloading', 
@@ -944,12 +946,17 @@ app.whenReady().then(() => {
           msg: "Java başarıyla kuruldu!" 
         });
         
+        // Temizlik
+        if (fs.existsSync(zipPath)) {
+          try { fs.rmSync(zipPath, { force: true }); } catch (_) {}
+        }
+        
         return { success: true };
       } catch (err) {
         console.error(`Download/extract failed with proxy "${proxy}":`, err);
         lastError = err;
         
-        // Clean up temp zip file
+        // Clean up temp zip file on failure
         if (fs.existsSync(zipPath)) {
           try { fs.rmSync(zipPath, { force: true }); } catch (_) {}
         }
