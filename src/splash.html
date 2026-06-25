@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Türklion Launcher Yükleniyor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+      user-select: none;
+    }
+    html {
+      background: transparent !important;
+    }
+    body {
+      width: 480px;
+      height: 320px;
+      background: rgba(7, 9, 14, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: #f8fafc;
+      position: relative;
+    }
+    .glowing-bg {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, transparent 70%);
+      filter: blur(20px);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: pulseGlow 3s infinite ease-in-out;
+    }
+    .logo-container {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-img {
+      width: 90px;
+      height: 90px;
+      z-index: 2;
+    }
+    .spinner {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border: 2px solid transparent;
+      border-top-color: #a855f7;
+      border-right-color: #06b6d4;
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite;
+      z-index: 1;
+    }
+    .title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 4px;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #ffffff 40%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      z-index: 2;
+    }
+    .subtitle {
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: #94a3b8;
+      font-weight: 500;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .loader-bar-bg {
+      width: 280px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.01);
+      z-index: 2;
+    }
+    .loader-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #a855f7, #06b6d4);
+      border-radius: 2px;
+      animation: fillProgress 2.5s cubic-bezier(0.1, 0.8, 0.1, 1) forwards;
+      box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes fillProgress {
+      0% { width: 0%; }
+      50% { width: 60%; }
+      80% { width: 90%; }
+      100% { width: 100%; }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="glowing-bg"></div>
+  <div class="logo-container">
+    <div class="spinner"></div>
+    <img src="assets/icon.png" class="logo-img" alt="Logo" />
+  </div>
+  <h1 class="title">TÜRKLION</h1>
+  <p class="subtitle">L A U N C H E R</p>
+  <div class="loader-bar-bg">
+    <div class="loader-bar-fill"></div>
+  </div>
+</body>
+</html>

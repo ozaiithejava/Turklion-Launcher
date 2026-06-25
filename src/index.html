@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Türklion Launcher</title>
+    <!-- Import Google Fonts: Outfit for UI, JetBrains Mono for Console -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <script src="renderer.js" defer></script>
+  </head>
+
+  <body>
+    <!-- Canvas for 3D Isometric Neon Grid -->
+    <canvas id="iso-grid-canvas"></canvas>
+
+    <!-- Custom Frameless Titlebar -->
+    <div class="titlebar" data-tauri-drag-region>
+      <div class="titlebar-logo" data-tauri-drag-region>
+        <span class="logo-glow"></span>
+        <span class="logo-text" data-tauri-drag-region data-i18n="titlebar_logo">TÜRKLION LAUNCHER</span>
+      </div>
+      <div class="titlebar-controls">
+        <button class="titlebar-btn minimize" id="btn-minimize" title="Minimize">
+          <svg width="12" height="12" viewBox="0 0 12 12"><rect x="1" y="5.5" width="10" height="1" fill="currentColor"/></svg>
+        </button>
+        <button class="titlebar-btn maximize" id="btn-maximize" title="Ekranı Kapla / Geri Getir">
+          <svg width="12" height="12" viewBox="0 0 12 12"><rect x="1.5" y="1.5" width="9" height="9" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+        </button>
+        <button class="titlebar-btn close" id="btn-close" title="Kapat">
+          <svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 2 L10 10 M10 2 L2 10" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+      
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-brand">
+            <div class="brand-logo-ring">
+              <img src="assets/icon.png" class="brand-logo-img" alt="Logo" />
+            </div>
+            <div class="brand-text">TÜRKLION</div>
+          </div>
+          <div class="nav-links">
+            <button class="nav-btn active" data-tab="tab-play">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 9-14 9V3z"/></svg>
+              <span data-i18n="nav_play">Oyna</span>
+            </button>
+            <button class="nav-btn" data-tab="tab-news">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M16 8h2m-2 4h2M6 8h6v8H6z"/></svg>
+              <span data-i18n="nav_news">Duyurular</span>
+            </button>
+            <button class="nav-btn" data-tab="tab-packs">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+              <span data-i18n="nav_packs">Paketler</span>
+            </button>
+            <button class="nav-btn" data-tab="tab-settings">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              <span data-i18n="nav_settings">Ayarlar</span>
+            </button>
+            <button class="nav-btn" data-tab="tab-console">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+              <span data-i18n="nav_console">Konsol</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <button class="social-btn" id="btn-website" title="Web Sitesi">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span data-i18n="nav_website">Web Sitesi</span>
+          </button>
+          <button class="social-btn" id="btn-discord" title="Discord Sunucusu">
+            <svg width="16" height="16" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.45-5c.87-.64,1.72-1.31,2.53-2a75.46,75.46,0,0,0,72.77,0c.81.69,1.66,1.36,2.53,2a68.43,68.43,0,0,1-10.45,5,77.7,77.7,0,0,0,6.63,10.85,105.73,105.73,0,0,0,31-18.83C129.87,48.12,123.63,25.39,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z"/></svg>
+            <span data-i18n="nav_discord">Discord</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="content">
+        
+        <!-- PLAY TAB -->
+        <div class="tab-content active" id="tab-play" style="position: relative;">
+          
+          <!-- Top Right Profile/Multi-Account Widget -->
+          <div class="profile-widget-container">
+            <div class="player-avatar-container">
+              <img id="player-avatar" src="https://mc-heads.net/avatar/ozaii/64" alt="Avatar" />
+            </div>
+            <div class="username-box">
+              <div class="username-input-wrapper" style="position: relative; display: flex; width: 100%;">
+                <input type="text" id="play-username" placeholder="Oyuncu adı..." data-i18n-placeholder="play_username_placeholder" value="ozaii" style="width: 100%; padding-right: 24px;" />
+                <button type="button" class="dropdown-toggle-btn" id="btn-dropdown-toggle">▼</button>
+              </div>
+              <div class="account-dropdown-list" id="account-dropdown-list" style="display: none;">
+                <!-- Saved accounts populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <div class="play-hero">
+            <div class="glowing-orb"></div>
+            <div class="hero-spartan-badge">
+               <div class="spartan-ring-outer"></div>
+               <div class="spartan-ring-inner"></div>
+               <img src="assets/icon.png" class="hero-spartan-img" alt="Spartan" />
+             </div>
+            <div class="hero-logo-container">
+              <span class="hero-title">TÜRKLION</span>
+              <span class="hero-subtitle" data-i18n="hero_subtitle">L A U N C H E R  ·  1.8.9</span>
+            </div>
+            <p class="hero-desc" data-i18n="hero_desc">Yüksek performans, optimize edilmiş gecikme oranları ve gelişmiş mod desteği ile üstün oyun deneyimi.</p>
+          </div>
+
+          <!-- Java Download Progress Bar (Initially Hidden) -->
+          <div class="download-progress-container" id="download-progress-container" style="display: none;">
+            <div class="download-label-row">
+              <span id="download-status-txt">Java JRE 8 İndiriliyor...</span>
+              <span id="download-percent-txt">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            </div>
+          </div>
+
+          <!-- Server Status Capsule -->
+          <div class="server-status-capsule" id="server-status-capsule">
+            <span class="status-dot pulsing" id="server-status-dot"></span>
+            <span class="status-text" id="server-status-text"></span>
+          </div>
+
+          <div class="play-controls-container" style="justify-content: center; background: transparent; border: none; box-shadow: none; padding: 0;">
+            <button class="play-button" id="btn-play" style="width: 280px; height: 56px; font-size: 1.35rem;">
+              <span class="play-btn-glow"></span>
+              <span class="play-btn-text" data-i18n="play_btn">OYNA</span>
+            </button>
+          </div>
+
+          <div class="game-status-msg" id="game-status-msg" data-i18n="game_status_ready">Oynamaya hazır</div>
+        </div>
+
+        <!-- NEWS TAB -->
+        <div class="tab-content" id="tab-news">
+          <h2 class="section-title" data-i18n="news_title">Son Duyurular & Güncellemeler</h2>
+          <div class="news-grid" id="news-grid">
+            <!-- News Cards will be loaded dynamically -->
+          </div>
+        </div>
+
+        <!-- PACKS TAB -->
+        <div class="tab-content" id="tab-packs">
+          <h2 class="section-title" data-i18n="packs_title">PvP Doku Paketleri</h2>
+          <div class="packs-search-bar" style="display: flex; gap: 10px; margin-bottom: 20px; align-items: center;">
+            <input type="text" id="packs-search-input" placeholder="Paket ara... (örn: pvp, faithful, fps)" data-i18n-placeholder="packs_search_placeholder" style="flex-grow: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 14px; color: var(--text-primary); font-size: 0.9rem; outline: none; transition: border-color 0.2s;" />
+            <button class="action-btn" id="packs-search-btn" style="padding: 10px 20px; font-size: 0.85rem; font-weight: 600; border-radius: 8px; background: linear-gradient(135deg, var(--accent-purple), rgba(168,85,247,0.7)); border: none; color: #fff; cursor: pointer; transition: all 0.2s;" data-i18n="packs_search_btn">Ara</button>
+          </div>
+          <div class="packs-grid" id="packs-grid">
+            <!-- Packs Cards will be loaded dynamically from Modrinth API -->
+          </div>
+        </div>
+
+        <!-- SETTINGS TAB -->
+        <div class="tab-content" id="tab-settings">
+          <h2 class="section-title" data-i18n="settings_title">İstemci Ayarları</h2>
+          <div class="settings-grid">
+            
+            <!-- RAM allocation -->
+            <div class="settings-card">
+              <h3 data-i18n="settings_ram_title">Bellek (RAM) Ayarları</h3>
+              <div class="form-group">
+                <div class="slider-labels">
+                  <span data-i18n="settings_max_ram_label">Maksimum RAM (Xmx):</span>
+                  <span class="slider-value" id="max-ram-val">2048 MB</span>
+                </div>
+                <input type="range" class="ram-range" id="settings-max-ram" min="1024" max="8192" step="512" value="2048" />
+                <div class="range-limits">
+                  <span>1 GB</span>
+                  <span>4 GB</span>
+                  <span>8 GB</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="slider-labels">
+                  <span data-i18n="settings_min_ram_label">Minimum RAM (Xms):</span>
+                  <span class="slider-value" id="min-ram-val">512 MB</span>
+                </div>
+                <input type="range" class="ram-range" id="settings-min-ram" min="256" max="4096" step="256" value="512" />
+                <div class="range-limits">
+                  <span>256 MB</span>
+                  <span>2 GB</span>
+                  <span>4 GB</span>
+                </div>
+              </div>
+
+              <!-- System Memory Auto-Recommender -->
+              <div class="ram-recommendation-box" id="ram-rec-box">
+                <div class="ram-rec-header">
+                  <span class="ram-rec-icon">⚡</span>
+                  <span class="ram-rec-title" data-i18n="ram_rec_title">Sistem Bellek Tavsiyesi</span>
+                </div>
+                <p class="ram-rec-desc" id="ram-rec-text"></p>
+                <button class="action-btn rec-apply-btn" id="btn-apply-ram-rec" type="button" data-i18n="ram_rec_apply_btn">Önerilen Ayarları Uygula</button>
+              </div>
+            </div>
+
+            <!-- Appearance & Customization Card -->
+            <div class="settings-card">
+              <h3 data-i18n="settings_custom_title">Özelleştirme & Oyun Ayarları</h3>
+              
+              <!-- Color Theme -->
+              <div class="form-group">
+                <label for="settings-theme" data-i18n="settings_theme_label">Launcher Renk Teması</label>
+                <select id="settings-theme" class="custom-select">
+                  <option value="purple" data-i18n="theme_purple">Neon Mor (Varsayılan)</option>
+                  <option value="cyan" data-i18n="theme_cyan">Neon Turkuaz</option>
+                  <option value="emerald" data-i18n="theme_emerald">Zümrüt Yeşili</option>
+                  <option value="ruby" data-i18n="theme_ruby">Yakup Kırmızısı</option>
+                  <option value="amber" data-i18n="theme_amber">Kehribar Sarısı</option>
+                </select>
+              </div>
+
+              <!-- Game Resolution -->
+              <div class="form-group">
+                <label data-i18n="settings_resolution_label">Oyun Çözünürlüğü</label>
+                <div class="resolution-inputs">
+                  <input type="number" id="settings-game-width" placeholder="Genişlik (Örn: 854)" value="854" min="640" max="3840" />
+                  <span class="resolution-separator">x</span>
+                  <input type="number" id="settings-game-height" placeholder="Yükseklik (Örn: 480)" value="480" min="360" max="2160" />
+                </div>
+              </div>
+
+              <!-- Start in Fullscreen -->
+              <div class="form-group checkbox-group">
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="settings-fullscreen" />
+                  <span class="checkmark"></span>
+                  <span class="checkbox-label" data-i18n="settings_fullscreen_label">Oyunu Tam Ekran Başlat</span>
+                </label>
+              </div>
+
+              <!-- Hide on Launch -->
+              <div class="form-group checkbox-group" style="margin-top: 14px;">
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="settings-hide-on-launch" checked />
+                  <span class="checkmark"></span>
+                  <span class="checkbox-label" data-i18n="settings_hide_on_launch_label">Oyunu Başlatınca Launcher'ı Gizle</span>
+                </label>
+                <small class="help-text" data-i18n="settings_hide_on_launch_help">Aktif olduğunda oyun başlarken launcher gizlenir. Kapatırsanız launcher açık kalır ve konsol sekmesinden oyun loglarını görebilirsiniz.</small>
+              </div>
+            </div>
+
+            <!-- Advanced & System Settings Card -->
+            <div class="settings-card full-width">
+              <h3 data-i18n="settings_advanced_title">Gelişmiş & Sistem Ayarları</h3>
+              <div class="settings-row" style="display: flex; gap: 24px; flex-wrap: wrap; text-align: left;">
+                
+                <!-- Left Column -->
+                <div style="flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 16px;">
+                  <div class="form-group">
+                    <label for="settings-close-behavior" data-i18n="settings_close_behavior_label">Kapatma Butonu Davranışı</label>
+                    <select id="settings-close-behavior" class="custom-select">
+                      <option value="tray" data-i18n="settings_close_behavior_tray">Sistem Tepsisine Küçült</option>
+                      <option value="exit" data-i18n="settings_close_behavior_exit">Uygulamadan Tamamen Çık</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="settings-lang" data-i18n="settings_lang_label">Launcher Dili / Language</label>
+                    <select id="settings-lang" class="custom-select">
+                      <option value="tr">Türkçe</option>
+                      <option value="en">English</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Right Column -->
+                <div style="flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: 16px;">
+                  <div class="form-group checkbox-group" style="margin-top: 0;">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" id="settings-discord-rpc" checked />
+                      <span class="checkmark"></span>
+                      <span class="checkbox-label" data-i18n="settings_discord_rpc_label">Discord Zengin Varlığı (Rich Presence)</span>
+                    </label>
+                  </div>
+                  <div class="form-group checkbox-group" style="margin-top: 0;">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" id="settings-hw-acceleration" checked />
+                      <span class="checkmark"></span>
+                      <span class="checkbox-label" data-i18n="settings_hw_acc_label">Launcher Donanım İvmesi (Hardware Acceleration)</span>
+                    </label>
+                    <small class="help-text" data-i18n="settings_hw_acc_help">Kapatıldığında launcher arayüz performansı düşebilir ancak bazı ekran kartı hatalarını giderir. (Yeniden başlatma gerektirir)</small>
+                  </div>
+                  <div class="form-group checkbox-group" style="margin-top: 0;">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" id="settings-force-gpu" />
+                      <span class="checkmark"></span>
+                      <span class="checkbox-label" data-i18n="settings_force_gpu_label">Yüksek Performanslı GPU Zorlaması (Force Dedicated GPU)</span>
+                    </label>
+                    <small class="help-text" data-i18n="settings_force_gpu_help">Minecraft'ın entegre grafik birimi yerine harici yüksek performanslı ekran kartı (Nvidia/AMD) üzerinde çalışmasını tetikler.</small>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="settings-actions">
+            <span class="save-status-msg" id="save-status-msg"></span>
+            <button class="save-btn" id="btn-save-settings">
+              <span data-i18n="settings_save_btn">Kaydet</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CONSOLE TAB -->
+        <div class="tab-content" id="tab-console">
+          <div class="console-header">
+            <h2 class="section-title" data-i18n="console_title">Oyun Konsol Günlükleri</h2>
+            <div class="console-actions" style="display: flex; gap: 8px;">
+              <button class="action-btn report" id="btn-report-console" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);" data-i18n="console_report_btn">Hata Bildir</button>
+              <button class="action-btn copy" id="btn-copy-console" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);" data-i18n="console_copy_btn">Kopyala</button>
+              <button class="action-btn clean" id="btn-clear-console" data-i18n="console_clear_btn">Temizle</button>
+            </div>
+          </div>
+          <div class="console-box" id="console-output">
+            <div class="log-line system">[Sistem] Türklion Launcher başlatıldı.</div>
+            <div class="log-line system">[Sistem] Konsol dinlemeye hazır...</div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <!-- Auto Update Overlay -->
+    <div id="update-overlay" class="update-overlay">
+      <div class="update-card">
+        <div class="update-spartan-badge">
+          <div class="spartan-ring-outer"></div>
+          <div class="spartan-ring-inner"></div>
+          <img src="assets/icon.png" class="update-spartan-img" alt="Spartan" />
+        </div>
+        <div class="update-status-container">
+          <h2 id="update-status-title">Güncellemeler Denetleniyor</h2>
+          <p id="update-status-detail">Lütfen bekleyin...</p>
+        </div>
+        <div class="update-progress-container" id="update-progress-container" style="display: none;">
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="update-progress-bar-fill" style="width: 0%;"></div>
+          </div>
+          <span class="update-percent" id="update-percent-txt">0%</span>
+        </div>
+        <div class="update-error-container" id="update-error-container" style="display: none;">
+          <button class="action-btn retry-btn" id="btn-update-retry">Yeniden Dene</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Account Add Modal -->
+    <div id="account-modal" class="update-overlay" style="display: none; z-index: 99999;">
+      <div class="update-card" style="max-width: 360px; padding: 24px; gap: 16px;">
+        <h2 style="font-size: 1.15rem; margin-bottom: 4px; font-weight: 700; color: var(--text-primary);">Yeni Hesap Ekle</h2>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px;">Listeye eklemek istediğiniz oyuncu adını girin:</p>
+        <div class="form-group" style="width: 100%; text-align: left; display: flex; flex-direction: column; gap: 6px;">
+          <input type="text" id="modal-account-name" placeholder="Oyuncu adı yazın..." style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 12px; color: #fff; outline: none; transition: border-color 0.2s;" />
+        </div>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: flex-end; margin-top: 10px;">
+          <button class="action-btn" id="btn-modal-cancel" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 8px 18px; font-size: 0.85rem; border-radius: 6px; cursor: pointer; color: var(--text-secondary); font-weight: 500;">İptal</button>
+          <button class="save-btn" id="btn-modal-save" style="padding: 8px 24px; font-size: 0.85rem; border-radius: 6px; cursor: pointer; font-weight: 600;">Ekle</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom News Expansion Backdrop -->
+    <div id="news-overlay" class="news-overlay"></div>
+
+    <!-- Sparta Overlay -->
+    <div id="sparta-overlay" class="sparta-overlay" style="display: none;">
+      <div class="sparta-text">THIS IS SPARTA!</div>
+    </div>
+  </body>
+</html>

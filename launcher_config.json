@@ -1,0 +1,7 @@
+{
+  "username": "ozaii",
+  "min_ram": "4096M",
+  "max_ram": "8192M",
+  "java_path": "java",
+  "custom_args": ""
+}

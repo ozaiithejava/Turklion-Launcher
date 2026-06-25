@@ -1,0 +1,137 @@
+name: Build Türklion Launcher (All Platforms)
+
+on:
+  push:
+    branches: [main, master]
+    tags:
+      - 'v*'
+  workflow_dispatch:  # Manuel tetikleme butonu
+
+jobs:
+  build-windows:
+    name: 🪟 Windows Build
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Windows (portable .exe)
+        run: npx electron-builder --win
+
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TurklionLauncher-Windows
+          path: dist/*.exe
+          retention-days: 30
+
+  build-linux:
+    name: 🐧 Linux Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Linux build deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rpm fakeroot dpkg
+
+      - name: Build Linux (AppImage + deb)
+        run: npx electron-builder --linux
+
+      - name: Upload Linux AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: TurklionLauncher-Linux-AppImage
+          path: dist/*.AppImage
+          retention-days: 30
+
+      - name: Upload Linux deb
+        uses: actions/upload-artifact@v4
+        with:
+          name: TurklionLauncher-Linux-deb
+          path: dist/*.deb
+          retention-days: 30
+
+  build-macos:
+    name: 🍎 macOS Build
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build macOS (dmg)
+        run: npx electron-builder --mac
+        env:
+          # Code signing devre dışı (sertifika olmadan)
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - name: Upload macOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TurklionLauncher-macOS
+          path: dist/*.dmg
+          retention-days: 30
+
+  # Tag push'larında GitHub Release oluştur ve dosyaları ekle
+  release:
+    name: 🚀 Create Release
+    needs: [build-windows, build-linux, build-macos]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-files
+          merge-multiple: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Türklion Launcher ${{ github.ref_name }}"
+          body: |
+            ## Türklion Launcher ${{ github.ref_name }}
+
+            ### İndirme Linkleri
+            | Platform | Dosya |
+            |----------|-------|
+            | 🪟 Windows | `.exe` portable |
+            | 🐧 Linux | `.AppImage` (çalıştırılabilir) veya `.deb` |
+            | 🍎 macOS | `.dmg` disk imajı |
+
+            > ℹ️ macOS kullanıcıları: İlk açılışta Gatekeeper uyarısı görebilirsiniz.
+            > Sistem Tercihleri → Güvenlik → "Yine de Aç" diyerek geçebilirsiniz.
+          files: release-files/**/*
+          draft: false
+          prerelease: false
