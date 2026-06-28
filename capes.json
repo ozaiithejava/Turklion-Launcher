@@ -1,252 +1,127 @@
 [
   {
     "id": 1,
-    "name": "Notch_Cape",
-    "url": "http://s.optifine.net/capes/Notch.png"
+    "name": "Ender_Dragon",
+    "url": "https://onelauncher.org/en/skin/a076c1ab66088c14c6a5e5b9dd108805de7157aa/download/"
   },
   {
     "id": 2,
-    "name": "jeb__Cape",
-    "url": "http://s.optifine.net/capes/jeb_.png"
+    "name": "Galaxy_Swirl",
+    "url": "https://onelauncher.org/en/skin/ce523a0f4b807b74e0d988d44d81715bb41464c0/download/"
   },
   {
     "id": 3,
-    "name": "Dream_Cape",
-    "url": "http://s.optifine.net/capes/Dream.png"
+    "name": "Blood_Moon",
+    "url": "https://onelauncher.org/en/skin/c370b54def689c952919a3e39d2fda6684de7f12/download/"
   },
   {
     "id": 4,
-    "name": "Technoblade_Cape",
-    "url": "http://s.optifine.net/capes/Technoblade.png"
+    "name": "Ice_Crown",
+    "url": "https://onelauncher.org/en/skin/f094aaea014a930ac0ae195d1fb7fac8764fbad9/download/"
   },
   {
     "id": 5,
-    "name": "DanTDM_Cape",
-    "url": "http://s.optifine.net/capes/DanTDM.png"
+    "name": "Fire_Demon",
+    "url": "https://onelauncher.org/en/skin/f5bea459be11b88ed8ee17f7b8e48b9532a8bf12/download/"
   },
   {
     "id": 6,
-    "name": "CaptainSparklez_Cape",
-    "url": "http://s.optifine.net/capes/CaptainSparklez.png"
+    "name": "Void_Walker",
+    "url": "https://onelauncher.org/en/skin/bd6b08afc7cb3e901726c6a618ee6d638214e797/download/"
   },
   {
     "id": 7,
-    "name": "Stampylonghead_Cape",
-    "url": "http://s.optifine.net/capes/Stampylonghead.png"
+    "name": "Neon_City",
+    "url": "https://onelauncher.org/en/skin/850017d29ae0b751b9d34adb91cc9f37d37466a4/download/"
   },
   {
     "id": 8,
-    "name": "Grian_Cape",
-    "url": "http://s.optifine.net/capes/Grian.png"
+    "name": "Cyberpunk",
+    "url": "https://onelauncher.org/en/skin/39c7029d0f05102e15a04d1b93c332d336e3ee08/download/"
   },
   {
     "id": 9,
-    "name": "MumboJumbo_Cape",
-    "url": "http://s.optifine.net/capes/MumboJumbo.png"
+    "name": "Golden_Knight",
+    "url": "https://onelauncher.org/en/skin/dad99d5a5ba2238ad43adad3db144a0c21f9857b/download/"
   },
   {
     "id": 10,
-    "name": "BajanCanadian_Cape",
-    "url": "http://s.optifine.net/capes/BajanCanadian.png"
+    "name": "Silver_Eagle",
+    "url": "https://onelauncher.org/en/skin/109367f248654d5cf406af26fe81549a5434bd00/download/"
   },
   {
     "id": 11,
-    "name": "JeromeASF_Cape",
-    "url": "http://s.optifine.net/capes/JeromeASF.png"
+    "name": "Dark_Matter",
+    "url": "https://onelauncher.org/en/skin/aa59156046f559bfb2fa1ded41ebf75e07afcb03/download/"
   },
   {
     "id": 12,
-    "name": "Huahwi_Cape",
-    "url": "http://s.optifine.net/capes/Huahwi.png"
+    "name": "Light_Bringer",
+    "url": "https://onelauncher.org/en/skin/b26f31f69389f7cc70e0f061e03be60913a71a2c/download/"
   },
   {
     "id": 13,
-    "name": "Fruitberries_Cape",
-    "url": "http://s.optifine.net/capes/Fruitberries.png"
+    "name": "Shadow_Ninja",
+    "url": "https://onelauncher.org/en/skin/30a6526bbc297dca0ef4b5829ec3652ec5aabbb7/download/"
   },
   {
     "id": 14,
-    "name": "Purpled_Cape",
-    "url": "http://s.optifine.net/capes/Purpled.png"
+    "name": "Storm_Breaker",
+    "url": "https://onelauncher.org/en/skin/e14206011a898f2b8f497837ccad2ace20833484/download/"
   },
   {
     "id": 15,
-    "name": "TommyInnit_Cape",
-    "url": "http://s.optifine.net/capes/TommyInnit.png"
+    "name": "Earth_Shaker",
+    "url": "https://onelauncher.org/en/skin/5d2e7599a1c2fed43a9c3206d9e48b8d83dfe0cd/download/"
   },
   {
     "id": 16,
-    "name": "WilburSoot_Cape",
-    "url": "http://s.optifine.net/capes/WilburSoot.png"
+    "name": "Water_Bender",
+    "url": "https://onelauncher.org/en/skin/48d5ed74a940b5b0351ad268b011dc977958b47b/download/"
   },
   {
     "id": 17,
-    "name": "Ph1LzA_Cape",
-    "url": "http://s.optifine.net/capes/Ph1LzA.png"
+    "name": "Air_Nomad",
+    "url": "https://onelauncher.org/en/skin/3b103a848e54665c21679c505ee921f6c3968b2f/download/"
   },
   {
     "id": 18,
-    "name": "Tubbo_Cape",
-    "url": "http://s.optifine.net/capes/Tubbo.png"
+    "name": "Fire_Lord",
+    "url": "https://onelauncher.org/en/skin/df666da5093e0a04653d32b9c8776233b32ef721/download/"
   },
   {
     "id": 19,
-    "name": "Fundy_Cape",
-    "url": "http://s.optifine.net/capes/Fundy.png"
+    "name": "Star_Gazer",
+    "url": "https://onelauncher.org/en/skin/1fe0898798baf00e6d2c5216941698bdfc706b08/download/"
   },
   {
     "id": 20,
-    "name": "GeorgeNotFound_Cape",
-    "url": "http://s.optifine.net/capes/GeorgeNotFound.png"
+    "name": "Moon_Child",
+    "url": "https://onelauncher.org/en/skin/cd99806d2b8a0a89cb53a098b2d7a365602e8b43/download/"
   },
   {
     "id": 21,
-    "name": "Sapnap_Cape",
-    "url": "http://s.optifine.net/capes/Sapnap.png"
+    "name": "Sun_King",
+    "url": "https://onelauncher.org/en/skin/8a152dcb2686402917fa7526f38fd03126026563/download/"
   },
   {
     "id": 22,
-    "name": "BadBoyHalo_Cape",
-    "url": "http://s.optifine.net/capes/BadBoyHalo.png"
+    "name": "Pixel_Art",
+    "url": "https://onelauncher.org/en/skin/5ba77a87d2ffe3b58b8f6a3463a3522f07b501e6/download/"
   },
   {
     "id": 23,
-    "name": "Skeppy_Cape",
-    "url": "http://s.optifine.net/capes/Skeppy.png"
+    "name": "Abstract_Colors",
+    "url": "https://onelauncher.org/en/skin/d27bb42ee5c88fcc1ea366843894c9d0fcbc11cc/download/"
   },
   {
     "id": 24,
-    "name": "PrestonPlayz_Cape",
-    "url": "http://s.optifine.net/capes/PrestonPlayz.png"
+    "name": "Retro_Wave",
+    "url": "https://onelauncher.org/en/skin/e5fa7924a215dfca4aa73a2416b5a4e31006a53f/download/"
   },
   {
     "id": 25,
-    "name": "Vikkstar123_Cape",
-    "url": "http://s.optifine.net/capes/Vikkstar123.png"
-  },
-  {
-    "id": 26,
-    "name": "LazarBeam_Cape",
-    "url": "http://s.optifine.net/capes/LazarBeam.png"
-  },
-  {
-    "id": 27,
-    "name": "SSundee_Cape",
-    "url": "http://s.optifine.net/capes/SSundee.png"
-  },
-  {
-    "id": 28,
-    "name": "PopularMMOs_Cape",
-    "url": "http://s.optifine.net/capes/PopularMMOs.png"
-  },
-  {
-    "id": 29,
-    "name": "Quackity_Cape",
-    "url": "http://s.optifine.net/capes/Quackity.png"
-  },
-  {
-    "id": 30,
-    "name": "Ranboo_Cape",
-    "url": "http://s.optifine.net/capes/Ranboo.png"
-  },
-  {
-    "id": 31,
-    "name": "awesamdude_Cape",
-    "url": "http://s.optifine.net/capes/awesamdude.png"
-  },
-  {
-    "id": 32,
-    "name": "Punz_Cape",
-    "url": "http://s.optifine.net/capes/Punz.png"
-  },
-  {
-    "id": 33,
-    "name": "Illumina_Cape",
-    "url": "http://s.optifine.net/capes/Illumina.png"
-  },
-  {
-    "id": 34,
-    "name": "TapL_Cape",
-    "url": "http://s.optifine.net/capes/TapL.png"
-  },
-  {
-    "id": 35,
-    "name": "Wisp_Cape",
-    "url": "http://s.optifine.net/capes/Wisp.png"
-  },
-  {
-    "id": 36,
-    "name": "PeteZahHutt_Cape",
-    "url": "http://s.optifine.net/capes/PeteZahHutt.png"
-  },
-  {
-    "id": 37,
-    "name": "Hannahxxrose_Cape",
-    "url": "http://s.optifine.net/capes/Hannahxxrose.png"
-  },
-  {
-    "id": 38,
-    "name": "Nihachu_Cape",
-    "url": "http://s.optifine.net/capes/Nihachu.png"
-  },
-  {
-    "id": 39,
-    "name": "JackManifoldTV_Cape",
-    "url": "http://s.optifine.net/capes/JackManifoldTV.png"
-  },
-  {
-    "id": 40,
-    "name": "Eret_Cape",
-    "url": "http://s.optifine.net/capes/Eret.png"
-  },
-  {
-    "id": 41,
-    "name": "CaptainPuffy_Cape",
-    "url": "http://s.optifine.net/capes/CaptainPuffy.png"
-  },
-  {
-    "id": 42,
-    "name": "Antfrost_Cape",
-    "url": "http://s.optifine.net/capes/Antfrost.png"
-  },
-  {
-    "id": 43,
-    "name": "Slimecicle_Cape",
-    "url": "http://s.optifine.net/capes/Slimecicle.png"
-  },
-  {
-    "id": 44,
-    "name": "ConnorEatsPants_Cape",
-    "url": "http://s.optifine.net/capes/ConnorEatsPants.png"
-  },
-  {
-    "id": 45,
-    "name": "KarlJacobs_Cape",
-    "url": "http://s.optifine.net/capes/KarlJacobs.png"
-  },
-  {
-    "id": 46,
-    "name": "Ponk_Cape",
-    "url": "http://s.optifine.net/capes/Ponk.png"
-  },
-  {
-    "id": 47,
-    "name": "Hbomb94_Cape",
-    "url": "http://s.optifine.net/capes/Hbomb94.png"
-  },
-  {
-    "id": 48,
-    "name": "Krtzyy_Cape",
-    "url": "http://s.optifine.net/capes/Krtzyy.png"
-  },
-  {
-    "id": 49,
-    "name": "Krinios_Cape",
-    "url": "http://s.optifine.net/capes/Krinios.png"
-  },
-  {
-    "id": 50,
-    "name": "Bitzel_Cape",
-    "url": "http://s.optifine.net/capes/Bitzel.png"
+    "name": "Future_Tech",
+    "url": "https://onelauncher.org/en/skin/28cd8ce7c7b5938941fda0f95cb799a25fbfa0e7/download/"
   }
 ]
