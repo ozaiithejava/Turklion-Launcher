@@ -1134,12 +1134,7 @@ app.whenReady().then(() => {
     // 3. Check and download client jar (turklion.jar)
     let needJarDownload = !jarExists || (localJarVer !== remoteJarVer);
 
-    if (jarExists && (localJarVer === "0.0.0" || localJarVer === "")) {
-      logToLauncherConsole(`[Stage 5/6] Client jar dosyası zaten mevcut. Sürüm işareti güncelleniyor: ${remoteJarVer}`);
-      needJarDownload = false;
-      localConfig.jar_version = remoteJarVer;
-      fs.writeFileSync(configPath, JSON.stringify(localConfig, null, 2), 'utf-8');
-    }
+    
 
     if (needJarDownload) {
       logToLauncherConsole(`[Stage 5/6] Client jar dosyası güncelleniyor (Sürüm: ${remoteJarVer})...`);
